@@ -1,0 +1,11 @@
+{
+  "pages": [
+    { "label": "Home", "path": "/", "type": "nav" },
+    { "label": "Adminstration", "path": "/", "type": "nav" },
+    { "label": "Academics", "path": "/", "type": "nav" },
+    { "label": "Admissions", "path": "/", "type": "nav" },
+    { "label": "Units", "path": "/", "type": "nav" },
+    { "label": "Centres", "path": "/", "type": "nav" },
+    { "label": "portal", "path": "/portal" }
+  ]
+}
