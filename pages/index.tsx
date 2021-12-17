@@ -4,8 +4,7 @@ import Image from "next/image";
 import React from "react";
 import Layout from "../components/Layout";
 import ResponsiveAppBar from "../components/appbar/ResponsiveAppBar";
-import styles from "../styles/Home.module.css";
-import { Academy } from "../components/appbar/HomePage";
+import { Academy } from "../components/HomePage";
 
 import SchoolIcon from "@mui/icons-material/School";
 import { Container, Grid } from "@mui/material";
@@ -14,12 +13,14 @@ import { Container, Grid } from "@mui/material";
 import fs from "fs";
 import path from "path";
 import matter from "gray-matter";
-import Blog from "../components/appbar/HomePage/Blog";
-import Carousel from "../components/appbar/HomePage/Carousel";
+
+import Blog from "../components/HomePage/Blog";
+import Carousel from "../components/HomePage/Carousel";
 
 // react-slick css
 import "slick-carousel/slick/slick.css"; 
 import "slick-carousel/slick/slick-theme.css";
+import { TPost } from "../types";
 
 const academy = [
   { title: "ORACLE Academy", meta: "Enrol Today", icon: <SchoolIcon /> },
@@ -38,23 +39,20 @@ const academy = [
   },
 ];
 const Home: NextPage<{
-  frontmatter: {
-    title: string;
-    date: string;
-  }[];
-}> = ({ frontmatter }) => {
+  posts: TPost[];
+}> = ({ posts }) => {
   return (
     <Layout>
       <Container maxWidth={"xl"}>
-        <Grid container component="main">
-          <Grid item xs={11} md={7}>
+        <Grid container component="main" justifyContent="space-around">
+          <Grid item xs={11} md={6}>
             <Carousel />
           </Grid>
 
           {/* blog titles */}
           <Grid item xs={11} md={4} p={1} sx={{backgroundColor: "#c1d6b3"}}>
-            {frontmatter.map(({ title, date }) => (
-              <Blog title={title} date={date} key={title} />
+            {posts.map(({ slug, frontmatter }) => (
+              <Blog slug={slug} frontmatter={frontmatter} key={slug} />
             ))}
           </Grid>
         </Grid>
@@ -75,17 +73,17 @@ export default Home;
 
 export const getStaticProps: GetStaticProps = () => {
   const files = fs.readdirSync(path.join("posts"));
-  console.log("files ", files);
-  const frontmatter = files.map((file) => {
-    const markdownWithMeta = fs.readFileSync(path.join("posts", file), "utf-8");
-    const { data } = matter(markdownWithMeta);
 
-    return data;
+  const posts = files.map((file) => {
+    const slug = file.replace(".md", "");
+    const markdownWithMeta = fs.readFileSync(path.join("posts", file), "utf-8");
+    const { data: frontmatter } = matter(markdownWithMeta);
+
+    return {frontmatter, slug};
   });
 
-  console.log("frontmatter ", frontmatter);
 
   return {
-    props: { frontmatter },
+    props: { posts },
   };
 };
