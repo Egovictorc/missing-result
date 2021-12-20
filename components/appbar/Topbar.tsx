@@ -13,7 +13,7 @@ const quickLinks = [
   { label: "Staff E-mail", link: "/" },
   { label: "Students E-mail", link: "/" },
   { label: "info@futo.edu.ng", link: "/" },
-  { label: "FUTO Portal", link: "/" },
+  { label: "FUTO Portal", link: "/portal" },
   { label: "E-Learning", link: "/" },
 ];
 

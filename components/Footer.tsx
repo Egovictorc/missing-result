@@ -2,17 +2,17 @@ import React from "react";
 import Image from "next/image";
 import styles from "../styles/Home.module.css";
 import { Box, Grid, Typography } from "@mui/material";
-import { MessageOutlined } from "@mui/icons-material";
+import { MessageOutlined, MapOutlined, HomeOutlined, Mail } from "@mui/icons-material";
 import Link from "next/link";
 
 const contacts = [
   {
     label: "Federal University of Technology, Owerri, Imo State, Nigeria",
-    Icon: <MessageOutlined />,
+    Icon: HomeOutlined,
     link: "",
   },
-  { label: "Futo Location on Map", Icon: <MessageOutlined />, link: "" },
-  { label: "info@futo.edu.ng", Icon: <MessageOutlined />, link: "" },
+  { label: "Futo Location on Map", Icon: MapOutlined , link: "" },
+  { label: "info@futo.edu.ng", Icon: Mail , link: "" },
 ];
 
 const quickLinks = [
@@ -62,7 +62,7 @@ const Footer: React.FC = () => {
         {contacts.map(({ label, Icon, link }) => (
           <Link href={link} key={label}>
             <a>
-              {Icon} <Typography variant="caption">{label}</Typography>
+              <Icon sx={{fontSize: "1rem" }} /> <Typography variant="caption">{label}</Typography>
             </a>
           </Link>
         ))}
@@ -82,7 +82,7 @@ const Footer: React.FC = () => {
             <Typography
               variant="caption"
               component="a"
-              sx={{ textTransform: "capitalize" }}
+              sx={{ textTransform: "capitalize", display: "block", paddingY: 1 }}
             >
               {label}
             </Typography>
@@ -104,7 +104,7 @@ const Footer: React.FC = () => {
             <Typography
               variant="caption"
               component="a"
-              sx={{ textTransform: "capitalize" }}
+              sx={{ textTransform: "capitalize", display: "block", paddingY: 1  }}
             >
               {label}
             </Typography>
