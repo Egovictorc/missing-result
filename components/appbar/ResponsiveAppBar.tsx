@@ -43,7 +43,7 @@ const ResponsiveAppBar = () => {
   return (
     <AppBar position="sticky" sx={{ backgroundColor: "#c1d6b3" }}>
       <Container maxWidth="xl">
-        <Toolbar disableGutters >
+        <Toolbar disableGutters>
           {/* <Typography
             variant="h6"
             noWrap
@@ -52,7 +52,8 @@ const ResponsiveAppBar = () => {
           >
             LOGO
           </Typography> */}
-          <Box sx={{ flexGrow: 1 }} >
+
+          <Box sx={{ flexGrow: 1 }}>
             <Link href="/">
               <a>
                 <Image
@@ -65,6 +66,7 @@ const ResponsiveAppBar = () => {
               </a>
             </Link>
           </Box>
+
           <Box sx={{ display: { xs: "flex", md: "none" } }}>
             <IconButton
               size="large"
@@ -101,8 +103,17 @@ const ResponsiveAppBar = () => {
               ))}
             </Menu>
           </Box>
-          <Box sx={{display: {xs: "none", md: "block", borderBottom: 3, borderColor: 'red'}}}>
-          <CustomTab />
+          <Box
+            sx={{
+              display: {
+                xs: "none",
+                md: "block",
+                borderBottom: 3,
+                borderColor: "red",
+              },
+            }}
+          >
+            <CustomTab />
           </Box>
         </Toolbar>
       </Container>

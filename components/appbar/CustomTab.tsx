@@ -7,8 +7,16 @@ import TabPanel from "@mui/lab/TabPanel";
 
 import Tabs from "@mui/material/Tabs";
 
+const tabCollection = [
+  { label: "Home", value: "home" },
+  { label: "administration", value: "administration" },
+  { label: "admissions", value: "admissions" },
+  { label: "academic", value: "academic" },
+  { label: "units", value: "units" },
+  { label: "centers", value: "centers" },
+];
 const CustomTab: React.FC = () => {
-  const [value, setValue] = React.useState("one");
+  const [value, setValue] = React.useState("home");
 
   const handleChange = (event: React.SyntheticEvent, newValue: string) => {
     setValue(newValue);
@@ -19,11 +27,16 @@ const CustomTab: React.FC = () => {
       onChange={handleChange}
       textColor="secondary"
       indicatorColor="secondary"
-      aria-label="secondary tabs example"
+      aria-label="secondary tabs"
     >
-      <Tab value="one" label="Item One" />
-      <Tab value="two" label="Item Two" />
-      <Tab value="three" label="Item Three" />
+      {tabCollection.map(({ label, value }) => (
+        <Tab
+          value={value}
+          label={label}
+          key={label}
+          sx={{textTransform: "capitalize"}}
+        />
+      ))}
     </Tabs>
   );
 };
