@@ -1,44 +1,34 @@
-import * as React from "react";
+import React, { useState } from "react";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
-import IconButton from "@mui/material/IconButton";
-import Typography from "@mui/material/Typography";
-import Menu from "@mui/material/Menu";
-import MenuIcon from "@mui/icons-material/Menu";
+
 import Container from "@mui/material/Container";
-import Avatar from "@mui/material/Avatar";
-import Button from "@mui/material/Button";
-import Tooltip from "@mui/material/Tooltip";
-import MenuItem from "@mui/material/MenuItem";
 
 import Link from "next/link";
 import Image from "next/image";
 import CustomTab from "./CustomTab";
+import MobileMenu from "./MobileMenu";
+import { IconButton } from "@mui/material";
+import MoreVertIcon from '@mui/icons-material/MoreVert';
 
-const pages = ["Products", "Pricing", "Blog"];
-const settings = ["Profile", "Account", "Dashboard", "Logout"];
+
+type Anchor = "top" | "left" | "bottom" | "right";
 
 const ResponsiveAppBar = () => {
-  const [anchorElNav, setAnchorElNav] =
-    React.useState<null | HTMLElement>(null);
-  const [anchorElUser, setAnchorElUser] =
-    React.useState<null | HTMLElement>(null);
+  const [isOpen, setIsOpen] = useState(false);
 
-  const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
-    setAnchorElNav(event.currentTarget);
-  };
-  const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
-    setAnchorElUser(event.currentTarget);
-  };
+  const toggleDrawer = (event: React.KeyboardEvent | React.MouseEvent) => {
+      if (
+        event.type === "keydown" &&
+        ((event as React.KeyboardEvent).key === "Tab" ||
+          (event as React.KeyboardEvent).key === "Shift")
+      ) {
+        return;
+      }
 
-  const handleCloseNavMenu = () => {
-    setAnchorElNav(null);
-  };
-
-  const handleCloseUserMenu = () => {
-    setAnchorElUser(null);
-  };
+      setIsOpen(isOpen => !isOpen);
+    };
 
   return (
     <AppBar position="sticky" sx={{ backgroundColor: "#c1d6b3" }}>
@@ -67,42 +57,22 @@ const ResponsiveAppBar = () => {
             </Link>
           </Box>
 
+          {/* mobile menu toggler */}
           <Box sx={{ display: { xs: "flex", md: "none" } }}>
             <IconButton
-              size="large"
-              aria-label="account of current user"
-              aria-controls="menu-appbar"
+              aria-label="more"
+              aria-controls="long-menu"
               aria-haspopup="true"
-              onClick={handleOpenNavMenu}
-              color="inherit"
+              // onClick={handleClick}
+              onClick={toggleDrawer}
             >
-              <MenuIcon />
+              <MoreVertIcon />
             </IconButton>
-            <Menu
-              id="menu-appbar"
-              anchorEl={anchorElNav}
-              anchorOrigin={{
-                vertical: "bottom",
-                horizontal: "right",
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: "top",
-                horizontal: "right",
-              }}
-              open={Boolean(anchorElNav)}
-              onClose={handleCloseNavMenu}
-              sx={{
-                display: { xs: "block", md: "none" },
-              }}
-            >
-              {pages.map((page) => (
-                <MenuItem key={page} onClick={handleCloseNavMenu}>
-                  <Typography textAlign="center">{page}</Typography>
-                </MenuItem>
-              ))}
-            </Menu>
           </Box>
+
+          {/* <MobileMenu isOpen={true} toggleDrawer={toggleDrawer} /> */}
+          <MobileMenu isOpen={isOpen} toggleDrawer={toggleDrawer} />
+
           <Box
             sx={{
               display: {

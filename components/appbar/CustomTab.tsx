@@ -6,20 +6,14 @@ import TabList from "@mui/lab/TabList";
 import TabPanel from "@mui/lab/TabPanel";
 
 import Tabs from "@mui/material/Tabs";
+import tabCollection from "./navLinks"
 
-const tabCollection = [
-  { label: "Home", value: "home" },
-  { label: "administration", value: "administration" },
-  { label: "admissions", value: "admissions" },
-  { label: "academic", value: "academic" },
-  { label: "units", value: "units" },
-  { label: "centers", value: "centers" },
-];
 const CustomTab: React.FC = () => {
-  const [value, setValue] = React.useState("home");
+  const [value, setValue] = React.useState(tabCollection[0].value);
 
   const handleChange = (event: React.SyntheticEvent, newValue: string) => {
-    setValue(newValue);
+    // setValue(newValue);
+    console.log("new val ", newValue)
   };
   return (
     <Tabs

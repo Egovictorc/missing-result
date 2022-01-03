@@ -4,7 +4,7 @@ import ResponsiveAppBar from "./appbar/ResponsiveAppBar";
 import Footer from "./Footer";
 import Topbar from "./appbar/Topbar";
 
-const Layouts: React.FC<{
+const Layout: React.FC<{
   title?: string;
   children: React.ReactNode;
 }> = ({ children, title }) => {
@@ -29,4 +29,4 @@ const Layouts: React.FC<{
   );
 };
 
-export default Layouts;
+export default Layout;
