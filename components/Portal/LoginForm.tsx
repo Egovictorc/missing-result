@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useRouter } from "next/router";
 import { EmailOutlined } from "@mui/icons-material";
 import {
   Box,
@@ -23,6 +24,9 @@ import { LoadingButton } from "@mui/lab";
 import Link from "next/link";
 
 const LoginForm = () => {
+
+  const router = useRouter();
+  // console.log("router ", router)
   const formik = useFormik({
     initialValues: {
       username: "",
@@ -32,6 +36,7 @@ const LoginForm = () => {
     onSubmit: (values) => {
       // alert(JSON.stringify(values, null, 2));
       setIsSubmitting(true);
+      router.push("/dashboard");
       //   dbAction(values).then(() => setIsSubmitting(false));
     },
   });

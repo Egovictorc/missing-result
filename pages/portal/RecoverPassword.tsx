@@ -5,10 +5,10 @@ import RecoveryForm from "../../components/RecoverPassword/RecoveryForm";
 
 const RecoverPassword = () => {
   return (
-    <Container maxWidth="sm">
+    <Container maxWidth="sm" >
       <Card>
         <CardContent>
-          <Box sx={{ textAlign: "center" }}>
+          <Box sx={{ textAlign: "center", mb: 2 }}>
             <Image
               src="/images/futo_logo_only.png"
               width={100}
@@ -16,11 +16,12 @@ const RecoverPassword = () => {
               alt="futo logo"
             />
             <Typography variant="h5">Recover your password</Typography>
-          </Box>
-
-          <Typography variant="body2" sx={{mb: 2}}>
+            <Typography variant="body2">
             To recover your password, kindly supply your username
           </Typography>
+          </Box>
+
+        
           <RecoveryForm />
         </CardContent>
       </Card>
