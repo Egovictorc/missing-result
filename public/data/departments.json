@@ -1,0 +1,60 @@
+{
+  "data": [
+    {
+      "name": "Electrical and Electronic Enginerring",
+      "staff": [
+        "Dr. Mike Egbe",
+        "Mr. Stephen Ugwu",
+        "Prof. Ifeanyi Ugba",
+        "Dr. Mike Emuh",
+        "Engr. Peter Ugwu",
+        "Engr. Mark Udo"
+      ]
+    },
+    {
+      "name": "Agricultural Enginerring",
+      "staff": [
+        "Dr. Sharon Osu",
+        "Mrs. Amaka Ubadigha",
+        "Prof. Ekene Ugwu",
+        "Mr. Ifeanyi Okoto",
+        "Dr. Matthew Agbo",
+        "Engr. Peter Ugwu",
+        "Engr. Mark Udo"
+      ]
+    },
+    {
+      "name": "Petroleum Enginerring",
+      "staff": [
+        "Dr. Mike Egbe",
+        "Prof. Ada Obi",
+        "Prof. Ifeanyi Ugba",
+        "Dr. Mike Emuh",
+        "Engr. Peter Ugwu",
+        "Engr. Mark Udo"
+      ]
+    },
+    {
+      "name": "chemical Enginerring",
+      "staff": [
+        "Dr. John Echeka",
+        "Mrs. Stephen Ugwu",
+        "Prof. Ifeanyi Ugba",
+        "Dr. Mike Emuh",
+        "Engr. Peter Ugwu",
+        "Engr. Mark Udo"
+      ]
+    },
+    {
+      "name": "computer science",
+      "staff": [
+        "Dr. Ugochukwu Ugumba",
+        "Mrs. Chinenye Agba",
+        "Prof. Ifeanyi Okafor",
+        "Engr. Emekea Onu",
+        "Engr. Philip Okeke",
+        "Engr. Mark Udo"
+      ]
+    }
+  ]
+}

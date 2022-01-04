@@ -19,8 +19,6 @@ import Link from "next/link";
 import Image from "next/image";
 
 const DashboardAppBar = () => {
-  const [showCard, setshowCard] = useState(false);
-
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
 
   const handleMenu = (event: React.MouseEvent<HTMLElement>) => {
@@ -31,7 +29,7 @@ const DashboardAppBar = () => {
     setAnchorEl(null);
   };
 
-  const username = "eze hyaciant nnamdi";
+  const username = "eze hyacent nnamdi";
   return (
     <AppBar position="static">
       <Toolbar>
@@ -79,7 +77,7 @@ const DashboardAppBar = () => {
           </IconButton>
 
           <Box sx={{ display: { xs: "none", sm: "inline-block" } }}>
-            <span> {username}</span>
+            <Typography sx={{textTransform: "capitalize"}}> {username}</Typography>
           </Box>
           <Box sx={{ display: { xs: "none", sm: "block" } }}>
             <span>Logout</span> &nbsp;

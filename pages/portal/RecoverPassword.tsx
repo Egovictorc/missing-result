@@ -1,7 +1,7 @@
 import { Box, Card, CardContent, Container, Typography } from "@mui/material";
 import Image from "next/image";
 import React from "react";
-import RecoveryForm from "../../components/RecoverPassword/RecoveryForm";
+import RecoveryForm from "../../components/recoverPassword/RecoveryForm";
 
 const RecoverPassword = () => {
   return (

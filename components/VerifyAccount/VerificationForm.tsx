@@ -16,23 +16,30 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
+import { useRouter } from "next/router";
 import { useFormik } from "formik";
 import React, { useState } from "react";
 import verificationSchema from "./verificationSchema";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import Link from "next/link";
 
+import department from "/"
+
 const initialValues = {
   matricNo: "",
-  studentType: "",
+  studentType: "new student",
 };
 
 const VerificationForm = () => {
+  const router = useRouter();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const formik = useFormik({
     initialValues,
     validationSchema: verificationSchema,
     onSubmit: (values) => {
+      if(values.studentType === "new student") {
+        router.push("/portal/Register")
+      }
       setIsSubmitting(true);
       setTimeout(() => setIsSubmitting(false), 3000);
       console.log("values ", values);
@@ -58,7 +65,10 @@ const VerificationForm = () => {
         <form onSubmit={formik.handleSubmit} noValidate>
           <FormControl component="fieldset">
             <FormLabel component="legend">Student Type</FormLabel>
-            <RadioGroup row aria-label="student type" name="student-type">
+            <RadioGroup row aria-label="student type"
+                name="studentType"
+                value={formik.values.studentType}
+                onChange={formik.handleChange}>
               {[
                 { value: "new student", label: "New Student" },
                 { value: "returning student", label: "Returning Student" },

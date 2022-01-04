@@ -1,6 +1,6 @@
 import { Alert, Container } from "@mui/material";
 import Layout from "../../components/Layout";
-import VerificationForm from "../../components/verifyAccount/VerificationForm";
+import RegistrationForm from "../../components/portal/RegistrationForm";
 
 const VerifyAccount = () => {
     return (
@@ -10,7 +10,7 @@ const VerifyAccount = () => {
             You are required to select student type and then enter your JAMB reg number(Admission No. for JUPEB students) if you are a new student or Matric Number if you are a returning student 
             </Alert>
 
-            <VerificationForm />
+            <RegistrationForm />
          </Container>
             
         </Layout>
