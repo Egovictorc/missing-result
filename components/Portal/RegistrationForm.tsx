@@ -7,13 +7,9 @@ import React, {
 import Image from "next/image";
 
 import {
-  Button,
   Card,
   Typography,
-  Container,
-  RadioGroup,
-  Radio,
-  FormControlLabel,
+
   TextField,
   InputAdornment,
   Stack,
@@ -21,8 +17,8 @@ import {
   CardActions,
   CardContent,
   Alert,
-  Input,
   FormControl,
+  Box,
 } from "@mui/material";
 import {
   ShoppingBagOutlined,
@@ -33,7 +29,20 @@ import {
 import { LoadingButton } from "@mui/lab";
 import { useFormik } from "formik";
 import registrationSchema from "./registrationSchema";
-import departments from "/data/departments.json"
+
+import PersonIcon from "@mui/icons-material/Person";
+import LockIcon from "@mui/icons-material/Lock";
+import EmailIcon from "@mui/icons-material/Email";
+interface IDepartment {
+  name: string;
+  staff: string[];
+}
+
+const fetchDepartments = async (): Promise<IDepartment[]> => {
+  const departments = await fetch("/data/departments.json");
+  const { data } = await departments.json();
+  return data;
+};
 
 const RegistrationForm = () => {
   const [{ alt, src }, setImg] = useState({
@@ -41,17 +50,21 @@ const RegistrationForm = () => {
     alt: "Upload an Image",
   });
   const [file, setFile] = useState<File>();
+  const [departments, setDepartments] = useState<IDepartment[]>([]);
+
+  useEffect(() => {
+    fetchDepartments()
+      .then((res) => setDepartments(res))
+      .catch((err) => console.log("err ", err));
+  }, []);
 
   const formik = useFormik({
     initialValues: {
       email: "",
       name: "",
-      dept: "",
+      department: "",
       username: "",
-      clientEmail: "",
-      clientPhone: "",
-      price: 3,
-      currency: "NGN",
+      password: "",
       passport: "",
     },
     validationSchema: registrationSchema,
@@ -60,13 +73,16 @@ const RegistrationForm = () => {
       // setIsSubmitting(true);
       // send email to
       const formData = new FormData();
+      const mapValues = new Map(Object.entries(values));
+    
       if (file) {
-        formData.append("file", file);
-        formData.append("email", values.email);
-        formData.append("clientEmail", values.clientEmail);
-        formData.append("price", values.price.toString());
-        formData.append("currency", values.currency);
+        formData.append("file ", file);
       }
+      mapValues.forEach((val, key) => {
+        formData.append(key, val);
+        console.log(key, " -> ", val)
+      });
+
     },
   });
 
@@ -89,7 +105,7 @@ const RegistrationForm = () => {
     >
       <CardContent>
         <Typography variant="body2" sx={{ mb: 2 }}>
-         Personal Information
+          Personal Information
         </Typography>
 
         <Stack
@@ -98,8 +114,7 @@ const RegistrationForm = () => {
           rowGap={4}
           onSubmit={formik.handleSubmit}
           alignItems="flex-start"
-    >
-
+        >
           <TextField
             required
             fullWidth
@@ -109,7 +124,7 @@ const RegistrationForm = () => {
             InputProps={{
               startAdornment: (
                 <InputAdornment position="start">
-                  <ShoppingCartOutlined />
+                  <PersonIcon />
                 </InputAdornment>
               ),
             }}
@@ -127,7 +142,7 @@ const RegistrationForm = () => {
             InputProps={{
               startAdornment: (
                 <InputAdornment position="start">
-                  <ShoppingCartOutlined />
+                  <EmailIcon />
                 </InputAdornment>
               ),
             }}
@@ -137,26 +152,27 @@ const RegistrationForm = () => {
             helperText={formik.touched.email && formik.errors.email}
           />
 
-        <TextField
-          select
-          required
-          fullWidth
-          label="Country"
-          variant="outlined"
-          name="country"
+          <TextField
+            select
+            required
+            fullWidth
+            label="Department"
+            variant="outlined"
+            name="department"
+            value={formik.values.department}
+            onChange={formik.handleChange}
+            error={
+              formik.touched.department && Boolean(formik.errors.department)
+            }
+            helperText={formik.touched.department && formik.errors.department}
+          >
+            {departments.map(({ name }) => (
+              <MenuItem key={name} value={name}>
+                {name}
+              </MenuItem>
+            ))}
+          </TextField>
 
-          value={formik.values.dept}
-          onChange={formik.handleChange}
-          error={formik.touched.dept && Boolean(formik.errors.dept)}
-          helperText={formik.touched.dept && formik.errors.dept}
-        >
-          {departments.data.map(({ name }) => (
-            <MenuItem key={name} value={name}>
-              {name}
-            </MenuItem>
-          ))}
-        </TextField>
-      
           {src && (
             <Image
               src={src}
@@ -179,14 +195,10 @@ const RegistrationForm = () => {
             name="passport"
             InputLabelProps={{ shrink: true }}
             value={formik.values.passport}
-            error={
-              formik.touched.passport && Boolean(formik.errors.passport)
-            }
-            helperText={
-              formik.touched.passport && formik.errors.passport
-            }
+            error={formik.touched.passport && Boolean(formik.errors.passport)}
+            helperText={formik.touched.passport && formik.errors.passport}
           />
-      <TextField
+          <TextField
             required
             fullWidth
             variant="outlined"
@@ -195,23 +207,43 @@ const RegistrationForm = () => {
             InputProps={{
               startAdornment: (
                 <InputAdornment position="start">
-                  <ShoppingCartOutlined />
+                  <PersonIcon />
                 </InputAdornment>
               ),
             }}
             value={formik.values.username}
             onChange={formik.handleChange}
-            error={formik.touched.username && Boolean(formik.errors.email)}
+            error={formik.touched.username && Boolean(formik.errors.username)}
             helperText={formik.touched.username && formik.errors.username}
           />
-          <LoadingButton
-            loading={formik.isSubmitting}
+          <TextField
+            required
+            fullWidth
             variant="outlined"
-            type="submit"
-            // disabled={ formik.touched && formik.errors}
-          >
-        Register
-          </LoadingButton>
+            label={"Password"}
+            name="password"
+            InputProps={{
+              startAdornment: (
+                <InputAdornment position="start">
+                  <LockIcon />
+                </InputAdornment>
+              ),
+            }}
+            value={formik.values.password}
+            onChange={formik.handleChange}
+            error={formik.touched.password && Boolean(formik.errors.password)}
+            helperText={formik.touched.password && formik.errors.password}
+          />
+          <Box sx={{ marginLeft: "auto" }}>
+            <LoadingButton
+              loading={formik.isSubmitting}
+              variant="outlined"
+              type="submit"
+              // disabled={ formik.touched && formik.errors}
+            >
+              Register
+            </LoadingButton>
+          </Box>
         </Stack>
       </CardContent>
     </Card>

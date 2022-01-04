@@ -3,18 +3,18 @@ import Layout from "../../components/Layout";
 import RegistrationForm from "../../components/portal/RegistrationForm";
 
 const VerifyAccount = () => {
-    return (
-        <Layout>
-         <Container maxWidth="lg">
-         <Alert severity="info">
-            You are required to select student type and then enter your JAMB reg number(Admission No. for JUPEB students) if you are a new student or Matric Number if you are a returning student 
-            </Alert>
+  return (
+    <Layout>
+      <Container maxWidth="lg" sx={{ mt: 5 }}>
+        <Alert severity="info">
+          You are required to provide accurate and valid student information.
+          Confirm informations entered before submission
+        </Alert>
 
-            <RegistrationForm />
-         </Container>
-            
-        </Layout>
-    )
-}
+        <RegistrationForm />
+      </Container>
+    </Layout>
+  );
+};
 
 export default VerifyAccount;
