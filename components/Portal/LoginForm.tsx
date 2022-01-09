@@ -2,10 +2,13 @@ import React, { useState } from "react";
 import { useRouter } from "next/router";
 import { EmailOutlined } from "@mui/icons-material";
 import {
+  Alert,
+  AlertTitle,
   Box,
   Card,
   CardContent,
   CircularProgress,
+  Collapse,
   FormControl,
   IconButton,
   InputAdornment,
@@ -13,18 +16,20 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
-import VisibilityIcon from '@mui/icons-material/Visibility';
-import PersonIcon from '@mui/icons-material/Person';
+import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
+import VisibilityIcon from "@mui/icons-material/Visibility";
+import PersonIcon from "@mui/icons-material/Person";
 import SchoolIcon from "@mui/icons-material/School";
-import LockIcon from '@mui/icons-material/Lock';
+import LockIcon from "@mui/icons-material/Lock";
 import { useFormik } from "formik";
 import validationSchema from "./validationSchema";
 import { LoadingButton } from "@mui/lab";
 import Link from "next/link";
+import StudentService from "../../services/StudentService";
+import { setDefaultResultOrder } from "dns/promises";
 
 const LoginForm = () => {
-
+  const [error, setError] = useState({statusText: "", message: ""})
   const router = useRouter();
   // console.log("router ", router)
   const formik = useFormik({
@@ -34,10 +39,31 @@ const LoginForm = () => {
     },
     validationSchema: validationSchema,
     onSubmit: (values) => {
-      // alert(JSON.stringify(values, null, 2));
       setIsSubmitting(true);
-      router.push("/dashboard");
-      //   dbAction(values).then(() => setIsSubmitting(false));
+      // alert(JSON.stringify(values, null, 2));
+      console.log("values ", values);
+
+      // try {
+      //   StudentService.findStudentByMatricno(Number(values.username), values.password)
+      // } catch(error) {
+      //   console.log("error ", error)
+      // }
+
+      StudentService.findStudentByMatricno(
+        Number(values.username),
+        values.password
+      )
+        .then((res) => {
+          setError({statusText: "", message: ""})
+          // console.log("student ", res);
+          router.push("/dashboard")
+        })
+        .catch((err) =>{
+          // console.log("errr response", err.response)
+          // console.log("errr status ", err.status)
+          setError({statusText: err.response.data.error, message: err.response.data.message})
+        } );
+      setIsSubmitting(false);
     },
   });
 
@@ -47,6 +73,10 @@ const LoginForm = () => {
   return (
     <Card>
       <CardContent>
+      <Collapse in={error.message !== ""}>
+      <Alert severity="error" onClose={() => setError({statusText: "", message: ""})}>
+          <AlertTitle> {error.statusText} </AlertTitle>
+          {error.message} </Alert></Collapse>
         <Stack
           component="form"
           spacing={3}
@@ -94,7 +124,7 @@ const LoginForm = () => {
             fullWidth
             name="password"
             label="Password"
-            type={showPassword ? "text": "password"}
+            type={showPassword ? "text" : "password"}
             value={formik.values.password}
             onChange={formik.handleChange}
             error={formik.touched.password && Boolean(formik.errors.password)}
@@ -107,9 +137,9 @@ const LoginForm = () => {
               ),
               endAdornment: (
                 <InputAdornment position="end">
-                 <IconButton onClick={() => setShowPassword(!showPassword)}>
-               { showPassword?  <VisibilityOffIcon />: <VisibilityIcon />}
-                 </IconButton>
+                  <IconButton onClick={() => setShowPassword(!showPassword)}>
+                    {showPassword ? <VisibilityOffIcon /> : <VisibilityIcon />}
+                  </IconButton>
                 </InputAdornment>
               ),
             }}
@@ -120,18 +150,20 @@ const LoginForm = () => {
             href="/"
             rel="noreferrer noopener"
             target="_blank"
-            sx={{color: "rgb(51, 122, 183)", textAlign: "center"}}
+            sx={{ color: "rgb(51, 122, 183)", textAlign: "center" }}
           >
             To vote for Best Tertiary Institution website/portal click here
           </Typography>
           <Box sx={{ display: "flex", flexDirection: "column" }}>
             <Link href="/portal/RecoverPassword">
-              <a style={{color: "red", textTransform: "capitalize"}}>forgot password</a>
+              <a style={{ color: "red", textTransform: "capitalize" }}>
+                forgot password
+              </a>
             </Link>
             <Typography variant="caption">
               First time here?&nbsp;
               <Link href="/portal/VerifyAccount">
-                <a style={{color: "red"}}>Verify your account</a>
+                <a style={{ color: "red" }}>Verify your account</a>
               </Link>
             </Typography>
           </Box>

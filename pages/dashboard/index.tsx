@@ -1,5 +1,6 @@
 import {
   Box,
+  Button,
   Card,
   CardContent,
   Container,
@@ -17,6 +18,7 @@ import { Visibility } from "@mui/icons-material";
 import ItemCard from "../../components/dashboard/ItemCard";
 import LibraryBooksIcon from "@mui/icons-material/LibraryBooks";
 import Image from "next/image";
+import Link from "next/link";
 
 const student = {
   fullname: "Eze Hycienth Nnamdi",
@@ -76,6 +78,9 @@ const DashboardPage = () => {
               <ListItemText primary={student.dept} />
               <Divider />
               <ListItemText primary={student.matricNo} />
+              <ListItemText primary={<Link href="/dashboard/requests" passHref>
+                <Button variant="contained" component="a">view requests</Button>
+              </Link>} />
             </List>
           </CardContent>
         </Card>
