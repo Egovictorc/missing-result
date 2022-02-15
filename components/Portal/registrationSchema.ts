@@ -9,7 +9,7 @@ const RegistrationSchema = Yup.object({
   name: Yup.string()
     .min(2, "Student name should be of minimum 2 characters length")
     .required("Student name is required"),
-  username: Yup.string()
+  matricno: Yup.string()
     .min(2, "Username should be of minimum 2 characters length")
     .required("Username is required"),
   password: Yup.string()

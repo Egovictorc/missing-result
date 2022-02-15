@@ -33,7 +33,7 @@ const ResponsiveAppBar = () => {
   return (
     <AppBar position="sticky" sx={{ backgroundColor: "#c1d6b3" }}>
       <Container maxWidth="xl">
-        <Toolbar disableGutters>
+        <Toolbar disableGutters sx={{backgroundColor: "transparent"}}>
           {/* <Typography
             variant="h6"
             noWrap

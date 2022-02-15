@@ -6,7 +6,11 @@ import Layout from "../components/Layout";
 import ResponsiveAppBar from "../components/appbar/ResponsiveAppBar";
 import { Academy } from "../components/HomePage";
 
+import ArticleIcon from "@mui/icons-material/Article";
+import AnnouncementIcon from "@mui/icons-material/Announcement";
+import EmojiEventsIcon from "@mui/icons-material/EmojiEvents";
 import SchoolIcon from "@mui/icons-material/School";
+import FeedIcon from "@mui/icons-material/Feed";
 import { Container, Grid } from "@mui/material";
 
 //node modules
@@ -18,24 +22,24 @@ import Blog from "../components/HomePage/Blog";
 import Carousel from "../components/HomePage/Carousel";
 
 // react-slick css
-import "slick-carousel/slick/slick.css"; 
+import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { TPost } from "../types";
 
 const academy = [
-  { title: "ORACLE Academy", meta: "Enrol Today", icon: <SchoolIcon /> },
+  { title: "ORACLE Academy", meta: "Enrol Today", icon: SchoolIcon },
   {
     title: "Best in CISCO Academy",
     meta: "First in Professional",
-    icon: <SchoolIcon />,
+    icon: EmojiEventsIcon,
   },
-  { title: "IBM Academy", meta: "Enroll Today", icon: <SchoolIcon /> },
-  { title: "FUTO News", meta: "Read All News", icon: <SchoolIcon /> },
-  { title: "Upcoming Events", meta: "Read All News", icon: <SchoolIcon /> },
+  { title: "IBM Academy", meta: "Enroll Today", icon: SchoolIcon },
+  { title: "FUTO News", meta: "Read All News", icon: ArticleIcon },
+  { title: "Upcoming Events", meta: "Read All News", icon: AnnouncementIcon },
   {
     title: "Executive Short courses",
     meta: "Advanced Diploma Certificates",
-    icon: <SchoolIcon />,
+    icon: FeedIcon,
   },
 ];
 const Home: NextPage<{
@@ -50,20 +54,22 @@ const Home: NextPage<{
           </Grid>
 
           {/* blog titles */}
-          <Grid item xs={11} md={4} p={1} sx={{backgroundColor: "#c1d6b3"}}>
+          <Grid item xs={11} md={4} p={1} sx={{ backgroundColor: "#c1d6b3" }}>
             {posts.map(({ slug, frontmatter }) => (
               <Blog slug={slug} frontmatter={frontmatter} key={slug} />
             ))}
           </Grid>
         </Grid>
 
-        <Grid container justifyContent="center" spacing={2}>
-          {academy.map(({ title, meta, icon }) => (
-            <Grid xs={11} sm={5} lg={4} item key={title}>
-              <Academy title={title} meta={meta} icon={icon} />
-            </Grid>
-          ))}
-        </Grid>
+        <Container maxWidth="lg" sx={{mb: 5}}>
+          <Grid container justifyContent="center" spacing={5} my={2}>
+            {academy.map(({ title, meta, icon }) => (
+              <Grid xs={11} sm={5} lg={4} item key={title}>
+                <Academy title={title} meta={meta} Icon={icon} />
+              </Grid>
+            ))}
+          </Grid>
+        </Container>
       </Container>
     </Layout>
   );
@@ -79,9 +85,8 @@ export const getStaticProps: GetStaticProps = () => {
     const markdownWithMeta = fs.readFileSync(path.join("posts", file), "utf-8");
     const { data: frontmatter } = matter(markdownWithMeta);
 
-    return {frontmatter, slug};
+    return { frontmatter, slug };
   });
-
 
   return {
     props: { posts },

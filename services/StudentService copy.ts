@@ -7,10 +7,7 @@ class StudentService {
    }
 
    findStudentByMatricno(matricno: number, password: string) {
-        return axios.post(`${STUDENT_API}/login`, {
-            matricno, password
-        })
-        // return axios.get(`${STUDENT_API}${matricno}?password=${password}`)
+        return axios.get(`${STUDENT_API}${matricno}?password=${password}`)
     }
    getStudentsCount() {
         return axios.get(`${STUDENT_API}count`)

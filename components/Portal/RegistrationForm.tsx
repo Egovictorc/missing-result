@@ -33,6 +33,7 @@ import registrationSchema from "./registrationSchema";
 import PersonIcon from "@mui/icons-material/Person";
 import LockIcon from "@mui/icons-material/Lock";
 import EmailIcon from "@mui/icons-material/Email";
+import StudentService from "../../services/StudentService";
 interface IDepartment {
   name: string;
   staff: string[];
@@ -43,8 +44,12 @@ const fetchDepartments = async (): Promise<IDepartment[]> => {
   const { data } = await departments.json();
   return data;
 };
-
+  const studentsCount = StudentService.getStudentsCount();
+   const currentYear = new Date().getFullYear();
 const RegistrationForm = () => {
+ 
+
+
   const [{ alt, src }, setImg] = useState({
     src: "",
     alt: "Upload an Image",
@@ -74,15 +79,23 @@ const RegistrationForm = () => {
       // send email to
       const formData = new FormData();
       const mapValues = new Map(Object.entries(values));
+
+      console.log("values ", values)
     
-      if (file) {
-        formData.append("file ", file);
-      }
+     
       mapValues.forEach((val, key) => {
         formData.append(key, val);
         console.log(key, " -> ", val)
       });
+       if (file) {
+        formData.append("file ", file);
+      }
+console.log("formData ", formData)
+    try {
+        StudentService.saveStudent(formData);
+    } catch(err) {
 
+    }
     },
   });
 
@@ -114,6 +127,7 @@ const RegistrationForm = () => {
           rowGap={4}
           onSubmit={formik.handleSubmit}
           alignItems="flex-start"
+           encType="multipart/form-data"
         >
           <TextField
             required
@@ -216,6 +230,26 @@ const RegistrationForm = () => {
             error={formik.touched.username && Boolean(formik.errors.username)}
             helperText={formik.touched.username && formik.errors.username}
           />
+
+            {/* <TextField
+            required
+            fullWidth
+            variant="outlined"
+            label={"Password"}
+            name="password"
+            InputProps={{
+              startAdornment: (
+                <InputAdornment position="start">
+                  <LockIcon />
+                </InputAdornment>
+              ),
+            }}
+            value={currentYear+"00"+1}
+            disabled
+            // onChange={formik.handleChange}
+            // error={formik.touched.password && Boolean(formik.errors.password)}
+            // helperText={formik.touched.password && formik.errors.password}
+          /> */}
           <TextField
             required
             fullWidth

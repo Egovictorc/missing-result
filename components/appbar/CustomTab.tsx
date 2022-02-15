@@ -16,12 +16,14 @@ const CustomTab: React.FC = () => {
     console.log("new val ", newValue)
   };
   return (
+   
     <Tabs
       value={value}
       onChange={handleChange}
       textColor="secondary"
       indicatorColor="secondary"
       aria-label="secondary tabs"
+      sx={{height: "100%"}}
     >
       {tabCollection.map(({ label, value }) => (
         <Tab
@@ -32,6 +34,7 @@ const CustomTab: React.FC = () => {
         />
       ))}
     </Tabs>
+
   );
 };
 

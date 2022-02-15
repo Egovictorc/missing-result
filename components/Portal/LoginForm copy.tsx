@@ -26,41 +26,44 @@ import validationSchema from "./validationSchema";
 import { LoadingButton } from "@mui/lab";
 import Link from "next/link";
 import StudentService from "../../services/StudentService";
+import { setDefaultResultOrder } from "dns/promises";
 
-import {CALLBACK_URL} from "../constants"
-import UnknownError from "../../types/error"
-
-import { signIn } from "next-auth/react";
 
 const LoginForm = () => {
-  const [error, setError] = useState({ statusText: "", message: "" });
+  const [error, setError] = useState({statusText: "", message: ""})
   const router = useRouter();
   // console.log("router ", router)
   const formik = useFormik({
     initialValues: {
-      matricno: "",
+      username: "",
       password: "",
     },
     validationSchema: validationSchema,
-    onSubmit: async (values: { matricno: string; password: string }) => {
+    onSubmit: (values) => {
       setIsSubmitting(true);
       // alert(JSON.stringify(values, null, 2));
       console.log("values ", values);
 
-      try {
-        const status = await signIn("credentials", {
-          ...values,
-          callbackUrl: CALLBACK_URL,
-        });
-      } catch (err: any) {
-        // console.log("error name ", err.name);
-        let error: UnknownError = err;
-        if (error.response) {
-          const { data, statusText } = error.response;
-          // console.log("response ", error.response );
-          setError({ message: data.message, statusText });
-        }
-      }
+      // try {
+      //   StudentService.findStudentByMatricno(Number(values.username), values.password)
+      // } catch(error) {
+      //   console.log("error ", error)
+      // }
+
+      StudentService.findStudentByMatricno(
+        Number(values.username),
+        values.password
+      )
+        .then((res) => {
+          setError({statusText: "", message: ""})
+          // console.log("student ", res);
+          router.push("/dashboard")
+        })
+        .catch((err) =>{
+          // console.log("errr response", err.response)
+          // console.log("errr status ", err.status)
+          setError({statusText: err.response.data.error, message: err.response.data.message})
+        } );
       setIsSubmitting(false);
     },
   });
@@ -71,15 +74,10 @@ const LoginForm = () => {
   return (
     <Card>
       <CardContent>
-        <Collapse in={error.message !== ""}>
-          <Alert
-            severity="error"
-            onClose={() => setError({ statusText: "", message: "" })}
-          >
-            <AlertTitle> {error.statusText} </AlertTitle>
-            {error.message}{" "}
-          </Alert>
-        </Collapse>
+      <Collapse in={error.message !== ""}>
+      <Alert severity="error" onClose={() => setError({statusText: "", message: ""})}>
+          <AlertTitle> {error.statusText} </AlertTitle>
+          {error.message} </Alert></Collapse>
         <Stack
           component="form"
           spacing={3}
@@ -108,12 +106,12 @@ const LoginForm = () => {
           <TextField
             required
             fullWidth
-            name="matricno"
+            name="username"
             label="Username"
-            value={formik.values.matricno}
+            value={formik.values.username}
             onChange={formik.handleChange}
-            error={formik.touched.matricno && Boolean(formik.errors.matricno)}
-            helperText={formik.touched.matricno && formik.errors.matricno}
+            error={formik.touched.username && Boolean(formik.errors.username)}
+            helperText={formik.touched.username && formik.errors.username}
             InputProps={{
               startAdornment: (
                 <InputAdornment position="start">
