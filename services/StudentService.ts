@@ -13,7 +13,7 @@ class StudentService {
         // return axios.get(`${STUDENT_API}${matricno}?password=${password}`)
     }
    getStudentsCount() {
-        return axios.get(`${STUDENT_API}count`)
+        return axios.get(`${STUDENT_API}/count`)
     }
     // async findStudentByMatricno(matricno: number, password: string) {
     //     const result = await fetch(`${STUDENT_API}${matricno}?password=${password}`)

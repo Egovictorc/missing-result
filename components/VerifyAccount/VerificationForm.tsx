@@ -23,7 +23,6 @@ import verificationSchema from "./verificationSchema";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import Link from "next/link";
 
-import department from "/"
 
 const initialValues = {
   matricNo: "",

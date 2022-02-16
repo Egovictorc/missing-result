@@ -9,7 +9,6 @@ import Image from "next/image";
 import {
   Card,
   Typography,
-
   TextField,
   InputAdornment,
   Stack,
@@ -44,12 +43,9 @@ const fetchDepartments = async (): Promise<IDepartment[]> => {
   const { data } = await departments.json();
   return data;
 };
-  const studentsCount = StudentService.getStudentsCount();
-   const currentYear = new Date().getFullYear();
+
+const currentYear = new Date().getFullYear();
 const RegistrationForm = () => {
- 
-
-
   const [{ alt, src }, setImg] = useState({
     src: "",
     alt: "Upload an Image",
@@ -80,22 +76,19 @@ const RegistrationForm = () => {
       const formData = new FormData();
       const mapValues = new Map(Object.entries(values));
 
-      console.log("values ", values)
-    
-     
+      console.log("values ", values);
+
       mapValues.forEach((val, key) => {
         formData.append(key, val);
-        console.log(key, " -> ", val)
+        console.log(key, " -> ", val);
       });
-       if (file) {
+      if (file) {
         formData.append("file ", file);
       }
-console.log("formData ", formData)
-    try {
+      console.log("formData ", formData);
+      try {
         StudentService.saveStudent(formData);
-    } catch(err) {
-
-    }
+      } catch (err) {}
     },
   });
 
@@ -127,7 +120,7 @@ console.log("formData ", formData)
           rowGap={4}
           onSubmit={formik.handleSubmit}
           alignItems="flex-start"
-           encType="multipart/form-data"
+          encType="multipart/form-data"
         >
           <TextField
             required
@@ -212,6 +205,8 @@ console.log("formData ", formData)
             error={formik.touched.passport && Boolean(formik.errors.passport)}
             helperText={formik.touched.passport && formik.errors.passport}
           />
+          {/* 
+          Username and password will be generated at d backend
           <TextField
             required
             fullWidth
@@ -230,26 +225,8 @@ console.log("formData ", formData)
             error={formik.touched.username && Boolean(formik.errors.username)}
             helperText={formik.touched.username && formik.errors.username}
           />
+*/}
 
-            {/* <TextField
-            required
-            fullWidth
-            variant="outlined"
-            label={"Password"}
-            name="password"
-            InputProps={{
-              startAdornment: (
-                <InputAdornment position="start">
-                  <LockIcon />
-                </InputAdornment>
-              ),
-            }}
-            value={currentYear+"00"+1}
-            disabled
-            // onChange={formik.handleChange}
-            // error={formik.touched.password && Boolean(formik.errors.password)}
-            // helperText={formik.touched.password && formik.errors.password}
-          /> */}
           <TextField
             required
             fullWidth

@@ -12,7 +12,7 @@ export const getServerSideProps: GetServerSideProps = async function (context) {
   // console.log("headers ", req.headers);
   // console.log("referer ", req.headers.referer);
 
-  // console.log("query ", query);
+  console.log("query ", query);
   // console.log("req ", req);
 
 
@@ -21,7 +21,7 @@ export const getServerSideProps: GetServerSideProps = async function (context) {
         // destination: `${referer}?error=${query.error}`,
         destination: `${process.env.NEXTAUTH_URL}/portal?error=${query.error}`,
         // destination: `${process.env.NEXTAUTH_URL}/auth/signin?error=${query.error}`,
-        permanent: false,
+        permanent: false
       },
   };
 };

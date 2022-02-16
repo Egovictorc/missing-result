@@ -72,7 +72,8 @@ export default async function auth(req: NextApiRequest, res: NextApiResponse) {
             );
             // console.log("data.user ", data.user)
             // return data.user;
-            return data.user._doc;
+            console.log("data ", DataView)
+            return data.student._doc;
           } catch (err: any) {
             let error = err;
             const { data, statusText } = error.response;

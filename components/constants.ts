@@ -1,5 +1,5 @@
-const CALLBACK_URL = process.env.CALLBACK_URL
+export const CALLBACK_URL = process.env.NEXT_PUBLIC_CALLBACK_URL
 
-export {
-    CALLBACK_URL
-}
+// export {
+//     CALLBACK_URL
+// }
